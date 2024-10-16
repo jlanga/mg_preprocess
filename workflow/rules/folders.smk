@@ -7,3 +7,4 @@ FASTP = RESULTS / "fastp"
 
 BUILD = RESULTS / "build"
 BOWTIE2 = RESULTS / "bowtie2"
+NONPAREIL = RESULTS / "nonpareil"

@@ -26,4 +26,6 @@ set-resources:
   bowtie2__unaligned__:
     mem_mb: 8G
     runtime: 1h
-
+  nonpareil__:
+    mem_mb: 4G
+    runtime: 6h

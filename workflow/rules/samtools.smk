@@ -10,53 +10,6 @@ rule samtools__index_bam__:
         "v4.7.2/bio/samtools/faidx"
 
 
-rule samtools__index_cram__:
-    """Index a cram file"""
-    input:
-        "{prefix}.cram",
-    output:
-        "{prefix}.cram.crai",
-    log:
-        "{prefix}.cram.crai.log",
-    wrapper:
-        "v4.7.2/bio/samtools/faidx"
-
-
-rule faidx_fasta:
-    """Index a fasta file"""
-    input:
-        "{prefix}.fasta",
-    output:
-        "{prefix}.fasta.fai",
-    log:
-        "{prefix}.fa.fai.log",
-    wrapper:
-        "v4.7.2/bio/samtools/faidx"
-
-rule faidx_fa:
-    """Index a fasta file"""
-    input:
-        "{prefix}.fa",
-    output:
-        "{prefix}.fa.fai",
-    log:
-        "{prefix}.fa.fai.log",
-    wrapper:
-        "v4.7.2/bio/samtools/faidx"
-
-
-rule faidx_fasta_gz:
-    """Index a fasta file"""
-    input:
-        "{prefix}.fasta.gz",
-    output:
-        "{prefix}.fasta.gz.fai",
-    log:
-        "{prefix}.fa.fai.log",
-    wrapper:
-        "v4.7.2/bio/samtools/faidx"
-
-
 rule faidx_fagz:
     """Index a gzipped fasta file"""
     input:

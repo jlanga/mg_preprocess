@@ -34,8 +34,9 @@ include: "rules/hosts.smk"
 include: "rules/fastp.smk"
 include: "rules/samtools.smk"
 include: "rules/bowtie2.smk"
+include: "rules/nonpareil.smk"
 
 
 rule all:
     input:
-        rules.bowtie2.input,
+        rules.nonpareil.input,

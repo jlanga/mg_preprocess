@@ -4,7 +4,6 @@ def get_input_fastq_for_host_mapping(wildcards):
     library_id = wildcards.library_id
     host = wildcards.host
     host_index = HOST_NAMES.index(host)
-    print(host_index)
     if host_index == 0:
         return [
             FASTP / f"{sample_id}.{library_id}_1.fq.gz",
