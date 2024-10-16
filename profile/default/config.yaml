@@ -9,8 +9,21 @@ default-resources:
 
 set-threads:
   fastp__: 8
+  bowtie2__build__: 24
+  bowtie2__map__: 24
+  bowtie2__unaligned__: 24
 
 set-resources:
   fastp__:
     mem_mb: 8G
     runtime: 30m
+  bowtie2__build__:
+    mem_mb: 32 * 1024 * 2 ** (attempt - 1)
+    runtime: 12h
+  bowtie2__map__:
+    mem_mb: 32 * 1024 * 2 ** (attempt - 1)
+    runtime: 12h
+  bowtie2__unaligned__:
+    mem_mb: 8G
+    runtime: 1h
+

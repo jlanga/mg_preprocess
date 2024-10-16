@@ -1,4 +1,4 @@
-references:  # Reads will be mapped sequentially
+hosts:  # Reads will be mapped sequentially
   human: resources/reference/human_22_sub.fa.gz
   chicken: resources/reference/chicken_39_sub.fa.gz
   # GRCg7b: resources/references/REF0003-GRCg7b/GCF_016699485.2_bGalGal1.mat.broiler.GRCg7b_genomic.fna.gz
