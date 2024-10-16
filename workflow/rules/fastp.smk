@@ -1,6 +1,6 @@
 include: "fastp_functions.smk"
 
-rule fastp__trim__:
+rule fastp__:
     """Run fastp on one PE library
 
     NOTE: don't use process substitution not because fastp cannot handle it,

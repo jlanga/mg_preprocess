@@ -1,0 +1,16 @@
+# Default resources fro snakemake
+---
+__use_yte__: true
+
+default-resources:
+    runtime: 1h
+    mem_mb: 1024
+
+
+set-threads:
+  fastp__: 8
+
+set-resources:
+  fastp__:
+    mem_mb: 8G
+    runtime: 30m
