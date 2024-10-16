@@ -35,8 +35,9 @@ include: "rules/fastp.smk"
 include: "rules/samtools.smk"
 include: "rules/bowtie2.smk"
 include: "rules/nonpareil.smk"
-
+include: "rules/singlem.smk"
 
 rule all:
     input:
         rules.nonpareil.input,
+        rules.singlem.input,
