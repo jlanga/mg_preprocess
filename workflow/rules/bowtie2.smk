@@ -1,5 +1,6 @@
 include: "bowtie2_functions.smk"
 
+
 rule bowtie2_build__:
     """Build bowtie2 index for a reference
 
@@ -113,8 +114,8 @@ rule bowtie2__unaligned__:
     bowtie2 fails to receive a piped SAM input. Therefore, we need to convert the CRAM file to a physical FASTQ file.
     """
     input:
-        bam = BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
-        bai = BOWTIE2 / "{host}.{sample_id}.{library_id}.bam.bai",
+        bam=BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
+        bai=BOWTIE2 / "{host}.{sample_id}.{library_id}.bam.bai",
     output:
         forward_=temp(BOWTIE2 / "{host}.{sample_id}.{library_id}_u1.fq.gz"),
         reverse_=temp(BOWTIE2 / "{host}.{sample_id}.{library_id}_u2.fq.gz"),
@@ -187,7 +188,7 @@ rule bowtie2__clean__:
             --threads {threads} \
         > {output.forward_} \
         ) 2> {log}
-        
+
         ( gzip \
             --decompress \
             --stdout \

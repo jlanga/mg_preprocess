@@ -15,9 +15,7 @@ SAMPLES = samples["sample_id"].drop_duplicates().values.tolist()
 
 SAMPLE_LIBRARY = samples[["sample_id", "library_id"]].values.tolist()
 
-HOST_NAMES = (
-    [] if features["hosts"] is None else list(features["hosts"].keys())
-)
+HOST_NAMES = [] if features["hosts"] is None else list(features["hosts"].keys())
 
 
 KRAKEN2_DBS = list(features["databases"]["kraken2"].keys())
@@ -39,6 +37,7 @@ include: "rules/singlem.smk"
 include: "rules/kraken2.smk"
 include: "rules/fastqc.smk"
 include: "rules/multiqc.smk"
+
 
 rule all:
     input:

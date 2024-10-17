@@ -28,4 +28,3 @@ rule hosts:
     """Recompress all host genomes"""
     input:
         [HOSTS / f"{host}.fa.gz" for host in HOST_NAMES],
-

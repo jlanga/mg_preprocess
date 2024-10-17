@@ -1,11 +1,11 @@
 rule multiqc__:
     input:
-        reads = [
+        reads=[
             READS / f"{sample_id}.{library_id}_{end}_fastqc.zip"
             for sample_id, library_id in SAMPLE_LIBRARY
             for end in [1, 2]
         ],
-        fastp = [
+        fastp=[
             FASTP / f"{sample_id}.{library_id}_fastp.html"
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
@@ -15,7 +15,7 @@ rule multiqc__:
             for report in BAM_REPORTS
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
-        clean = [
+        clean=[
             BOWTIE2 / f"{sample_id}.{library_id}_{end}_fastqc.zip"
             for sample_id, library_id in SAMPLE_LIBRARY
             for end in ["1", "2"]
@@ -32,11 +32,11 @@ rule multiqc__:
     output:
         RESULTS / "preprocess.html",
     log:
-        RESULTS / "preprocess.log"
+        RESULTS / "preprocess.log",
     conda:
         "../environments/multiqc.yml"
     params:
-        outdir = RESULTS
+        outdir=RESULTS,
     shell:
         """
         multiqc \

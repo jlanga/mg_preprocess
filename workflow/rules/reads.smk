@@ -1,5 +1,6 @@
 include: "reads_functions.smk"
 
+
 rule reads__:
     """Make a link to the original forward file, with a prettier name than default"""
     input:
@@ -17,6 +18,7 @@ rule reads__:
         ln --symbolic $(readlink --canonicalize {input.forward_}) {output.forward_} 2> {log}
         ln --symbolic $(readlink --canonicalize {input.reverse_}) {output.reverse_} 2> {log}
         """
+
 
 rule reads:
     """Link all reads in the samples.tsv"""

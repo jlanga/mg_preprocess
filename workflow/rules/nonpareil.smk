@@ -27,7 +27,7 @@ rule nonpareil__run__:
             -f fastq \
             -t {threads} \
         2> {log} 1>&2 || true
-        """  
+        """
 
 
 rule nonpareil__curves__:
@@ -50,6 +50,7 @@ rule nonpareil__curves__:
             {input} \
         2> {log} 1>&2
         """
+
 
 rule nonpareil:
     """Run nonpareil over all samples and produce JSONs for multiqc"""

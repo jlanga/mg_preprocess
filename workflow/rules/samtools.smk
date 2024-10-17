@@ -48,6 +48,7 @@ rule samtools__flagstats__:
     wrapper:
         "v4.7.2/bio/samtools/idxstats"
 
+
 rule samtools__stats__:
     input:
         bam="{prefix}.bam",

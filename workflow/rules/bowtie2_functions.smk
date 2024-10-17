@@ -19,17 +19,19 @@ def get_input_fastq_for_host_mapping(wildcards):
 def get_forward_fastq(wildcards):
     return get_input_fastq_for_host_mapping(wildcards)[0]
 
+
 def get_reverse_fastq(wildcards):
     return get_input_fastq_for_host_mapping(wildcards)[1]
+
 
 def compose_rg_id(wildcards):
     """Compose the read group ID for bowtie2"""
     return f"{wildcards.sample_id}_{wildcards.library_id}"
 
+
 def compose_rg_extra(wildcards):
     """Compose the read group extra information for bowtie2"""
     return f"LB:truseq_{wildcards.library_id}\\tPL:Illumina\\tSM:{wildcards.sample_id}"
-
 
 
 def get_final_fastq(wildcards):
@@ -47,8 +49,10 @@ def get_final_fastq(wildcards):
         BOWTIE2 / f"{last_host}.{sample_id}.{library_id}_u2.fq.gz",
     ]
 
+
 def get_final_fastq_forward(wildcards):
     return get_final_fastq(wildcards)[0]
+
 
 def get_final_fastq_reverse(wildcards):
     return get_final_fastq(wildcards)[1]

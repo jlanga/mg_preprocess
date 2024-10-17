@@ -8,6 +8,6 @@ rule fastqc__:
     log:
         "{prefix}_fastqc.log",
     params:
-        extra = "--quiet"
+        extra="--quiet",
     wrapper:
         "v4.7.2/bio/fastqc"

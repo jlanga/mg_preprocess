@@ -56,7 +56,6 @@ rule singlem__condense__:
         """
 
 
-
 rule singlem__microbial_fraction__:
     """Run singlem microbial_fraction over one sample"""
     input:
@@ -82,7 +81,6 @@ rule singlem__microbial_fraction__:
             --metapackage {input.data} \
         2> {log} 1>&2
         """
-
 
 
 rule singlem__microbial_fraction__aggregate__:

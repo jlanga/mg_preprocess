@@ -87,4 +87,4 @@ rule kraken2:
             KRAKEN2 / f"{kraken2_db}" / f"{sample}.{library}.out.gz"
             for sample, library in SAMPLE_LIBRARY
             for kraken2_db in KRAKEN2_DBS
-        ]
+        ],
