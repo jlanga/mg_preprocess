@@ -24,7 +24,7 @@ rule bowtie2_build__:
     conda:
         "../environments/bowtie2.yml"
     params:
-        prefix=lambda w: str(BOWTIE2 / f"{w.host}"),
+        prefix=lambda w: str(BOWTIE2 / "build" / f"{w.host}"),
     cache: "omit-software"
     shell:
         """
