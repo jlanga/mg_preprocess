@@ -6,6 +6,10 @@
 
 A Snakemake workflow for preprocessing FASTQ reads for metagenomics.
 
+This is an auxiliary pipeline for:
+ - [mg_assembly](https://github.com/3d-omics/mg_assembly)
+ - [mg_quant](https://github.com/3d-omics/mg_quant)
+
 ## Usage
 
 0. Requirements
