@@ -26,9 +26,8 @@ rule nonpareil__run__:
             -b {params.prefix} \
             -f fastq \
             -t {threads} \
-        2>> {log} \
-        1>&2 || true
-        """
+        2> {log} 1>&2 || true
+        """  
 
 
 rule nonpareil__curves__:
