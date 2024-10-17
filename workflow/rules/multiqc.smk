@@ -10,7 +10,7 @@ rule multiqc__:
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
         bowtie2=[
-            BOWTIE2 / host / f"{sample_id}.{library_id}.{report}"
+            BOWTIE2 / f"{host}.{sample_id}.{library_id}.{report}"
             for host in HOST_NAMES
             for report in BAM_REPORTS
             for sample_id, library_id in SAMPLE_LIBRARY
@@ -46,6 +46,7 @@ rule multiqc__:
             --outdir {params.outdir} \
             --dirs \
             --dirs-depth 1 \
+            --fullnames \
             {input} \
         2> {log} 1>&2
         """
