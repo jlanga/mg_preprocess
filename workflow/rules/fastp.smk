@@ -16,8 +16,8 @@ rule fastp__:
             FASTP / "{sample_id}.{library_id}_1.fq.gz",
             FASTP / "{sample_id}.{library_id}_2.fq.gz",
         ],
-        html = FASTP / "{sample_id}.{library_id}.html",
-        json = FASTP / "{sample_id}.{library_id}.json",
+        html = FASTP / "{sample_id}.{library_id}_fastp.html",
+        json = FASTP / "{sample_id}.{library_id}_fastp.json",
     log:
         FASTP / "{sample_id}.{library_id}.log",
     params:

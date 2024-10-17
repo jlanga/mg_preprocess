@@ -18,7 +18,6 @@ rule reads__:
         ln --symbolic $(readlink --canonicalize {input.reverse_}) {output.reverse_} 2> {log}
         """
 
-
 rule reads:
     """Link all reads in the samples.tsv"""
     input:

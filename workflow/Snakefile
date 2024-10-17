@@ -36,6 +36,9 @@ include: "rules/samtools.smk"
 include: "rules/bowtie2.smk"
 include: "rules/nonpareil.smk"
 include: "rules/singlem.smk"
+include: "rules/kraken2.smk"
+include: "rules/fastqc.smk"
+include: "rules/multiqc.smk"
 
 rule all:
     input:
