@@ -1,0 +1,30 @@
+digraph snakemake_dag {
+	// newrank=true;
+    rankdir=LR;
+    graph[bgcolor=white, margin=0, compound=true];
+    node[shape=box, style=rounded, fontname=sans, fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+
+	subgraph cluster_0 {
+		label = "Preprocess";
+		shape=box; style=rounded; fontname=sans; fontsize=10; penwidth=2; margin=10;
+        reads        [label = "FASTQ\nreads", color = "0.59 0.6 0.85", style="rounded"];
+	    reference    [label = "Host\nGenome", color = "0.15 0.6 0.85", style="rounded"];
+    	fastp        [label = "fastp", color = "0.64 0.6 0.85", style="rounded"];
+    	bowtie2_host [label = "bowtie2\nHosts", color = "0.43 0.6 0.85", style="rounded"];
+		nonpareil    [label = "nonpareil", color = "0.14 0.6 0.85", style="rounded"];
+		singlem      [label = "SingleM", color = "0.27 0.6 0.85", style="rounded"];
+		kraken2      [label = "kraken2", color = "0.01 0.6 0.85", style="rounded"];
+	}
+
+
+
+    reads -> fastp
+    reference -> bowtie2_host
+
+	bowtie2_host -> bowtie2_host
+    fastp -> kraken2
+	fastp -> bowtie2_host
+    bowtie2_host -> nonpareil
+	bowtie2_host -> singlem
+}
