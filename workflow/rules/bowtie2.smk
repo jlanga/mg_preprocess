@@ -66,9 +66,9 @@ rule bowtie2__map__:
         fai=HOSTS / "{host}.fa.gz.fai",
         gzi=HOSTS / "{host}.fa.gz.gzi",
     output:
-        bam=BOWTIE2 / "{host}" / "{sample_id}.{library_id}.bam",
+        bam=BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
     log:
-        BOWTIE2 / "{host}" / "{sample_id}.{library_id}.log",
+        BOWTIE2 / "{host}.{sample_id}.{library_id}.log",
     params:
         index=lambda w: BOWTIE2 / "build" / f"{w.host}",
         samtools_extra=params["bowtie2"]["samtools_extra"],
@@ -100,7 +100,7 @@ rule bowtie2__map__:
 rule bowtie2__map:
     input:
         [
-            BOWTIE2 / host / f"{sample_id}.{library_id}.bam"
+            BOWTIE2 / f"{host}.{sample_id}.{library_id}.bam"
             for host in HOST_NAMES
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
@@ -113,12 +113,13 @@ rule bowtie2__unaligned__:
     bowtie2 fails to receive a piped SAM input. Therefore, we need to convert the CRAM file to a physical FASTQ file.
     """
     input:
-        bam = BOWTIE2 / "{host}" / "{sample_id}.{library_id}.bam",
+        bam = BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
+        bai = BOWTIE2 / "{host}.{sample_id}.{library_id}.bam.bai",
     output:
-        forward_=temp(BOWTIE2 / "{host}" / "{sample_id}.{library_id}_u1.fq.gz"),
-        reverse_=temp(BOWTIE2 / "{host}" / "{sample_id}.{library_id}_u2.fq.gz"),
+        forward_=temp(BOWTIE2 / "{host}.{sample_id}.{library_id}_u1.fq.gz"),
+        reverse_=temp(BOWTIE2 / "{host}.{sample_id}.{library_id}_u2.fq.gz"),
     log:
-        BOWTIE2 / "{host}" / "{sample_id}.{library_id}.unaligned.log",
+        BOWTIE2 / "{host}.{sample_id}.{library_id}.unaligned.log",
     conda:
         "../environments/bowtie2.yml"
     shell:
@@ -133,10 +134,12 @@ rule bowtie2__unaligned__:
             -u \
             --threads {threads} \
             {input} \
+            "*" \
         | samtools collate \
             -O \
             -u \
             -f \
+            -r 1e6 \
             -T {output.forward_}.collate \
             --threads {threads} \
             - \
@@ -146,7 +149,7 @@ rule bowtie2__unaligned__:
             -0 /dev/null \
             -s /dev/null \
             --threads {threads} \
-            -c 9 \
+            -c 1 \
             /dev/stdin \
         ) 2> {log} 1>&2
         """
@@ -155,7 +158,7 @@ rule bowtie2__unaligned__:
 rule bowtie2__unaligned:
     input:
         [
-            BOWTIE2 / host / f"{sample_id}.{library_id}_u{end}.fq.gz"
+            BOWTIE2 / f"{host}.{sample_id}.{library_id}_u{end}.fq.gz"
             for host in HOST_NAMES
             for sample_id, library_id in SAMPLE_LIBRARY
             for end in [1, 2]
@@ -175,8 +178,25 @@ rule bowtie2__clean__:
         "../environments/bowtie2.yml"
     shell:
         """
-        ln --force {input.forward_} {output.forward_} 2>  {log}
-        ln --force {input.reverse_} {output.reverse_} 2>> {log}
+        ( gzip \
+            --decompress \
+            --stdout \
+            {input.forward_} \
+        | bgzip \
+            --compress-level 9 \
+            --threads {threads} \
+        > {output.forward_} \
+        ) 2> {log}
+        
+        ( gzip \
+            --decompress \
+            --stdout \
+            {input.reverse_} \
+        | bgzip \
+            --compress-level 9 \
+            --threads {threads} \
+        > {output.reverse_} \
+        ) 2>> {log}
         """
 
 

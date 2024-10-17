@@ -12,6 +12,7 @@ set-threads:
   bowtie2__build__: 24
   bowtie2__map__: 24
   bowtie2__unaligned__: 24
+  bowtie2__clean__: 24
 
 set-resources:
   fastp__:
