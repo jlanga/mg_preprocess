@@ -17,7 +17,6 @@ SAMPLE_LIBRARY = samples[["sample_id", "library_id"]].values.tolist()
 
 HOST_NAMES = [] if features["hosts"] is None else list(features["hosts"].keys())
 
-
 KRAKEN2_DBS = list(features["databases"]["kraken2"].keys())
 
 BAM_REPORTS = ["stats.tsv", "flagstats.txt", "idxstats.tsv"]
