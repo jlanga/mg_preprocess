@@ -1,10 +1,14 @@
 # Snakemake workflow: `mg_preprocess`
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥8.0.0-brightgreen.svg)](https://snakemake.github.io)
-[![GitHub actions status](https://github.com/3d-omics/mg_quant/workflows/Tests/badge.svg)](https://github.com/3d-omics/mg_quant/actions)
+[![GitHub actions status](https://github.com/jlanga/mg_preprocess/workflows/Tests/badge.svg)](https://github.com/jlanga/mg_preprocess/actions)
 
 
 A Snakemake workflow for preprocessing FASTQ reads for metagenomics.
+
+This is an auxiliary pipeline for:
+ - [mg_assembly](https://github.com/3d-omics/mg_assembly)
+ - [mg_quant](https://github.com/3d-omics/mg_quant)
 
 ## Usage
 

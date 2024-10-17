@@ -1,12 +1,15 @@
 RESULTS = Path("results")
 
-READS = RESULTS / "reads"
-HOSTS = RESULTS / "hosts"
 
-FASTP = RESULTS / "fastp"
+PRE = RESULTS / "preprocess"
 
-BUILD = RESULTS / "build"
-BOWTIE2 = RESULTS / "bowtie2"
-NONPAREIL = RESULTS / "nonpareil"
-SINGLEM = RESULTS / "singlem"
-KRAKEN2 = RESULTS / "kraken2"
+READS = PRE / "reads"
+HOSTS = PRE / "hosts"
+
+FASTP = PRE / "fastp"
+
+BUILD = PRE / "build"
+BOWTIE2 = PRE / "bowtie2"
+NONPAREIL = PRE / "nonpareil"
+SINGLEM = PRE / "singlem"
+KRAKEN2 = PRE / "kraken2"

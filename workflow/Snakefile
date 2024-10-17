@@ -42,3 +42,8 @@ rule all:
     input:
         rules.singlem.input,
         rules.multiqc.input,
+
+
+rule:
+    input:
+        rules.all.input,
