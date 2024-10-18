@@ -1,11 +1,8 @@
-include: "reads_functions.smk"
-
-
 rule preprocess__reads:
     """Make a link to the original forward file, with a prettier name than default"""
     input:
-        forward_=get_forward,
-        reverse_=get_reverse,
+        forward_=get_forward_filename,
+        reverse_=get_reverse_filename,
     output:
         forward_=PRE_READS / "{sample_id}.{library_id}_1.fq.gz",
         reverse_=PRE_READS / "{sample_id}.{library_id}_2.fq.gz",
