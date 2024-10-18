@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/jlanga/mg_preprocess/compare/v1.0.0...v1.1.0) (2024-10-18)
+
+
+### Features
+
+* add unnamed rule as a surrogate of all ([f1281af](https://github.com/jlanga/mg_preprocess/commit/f1281af54c763e7a20765e105366a0c82c44c06a))
+
+
+### Bug Fixes
+
+* put everything in results/preprocess ([98b3b7c](https://github.com/jlanga/mg_preprocess/commit/98b3b7cae9caeb4d5f9a1e297e1627e9299b24d2))
+
 ## 1.0.0 (2024-10-17)
 
 
