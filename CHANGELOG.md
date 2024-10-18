@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.0](https://github.com/jlanga/mg_preprocess/compare/v1.0.0...v1.1.0) (2024-10-18)
+
+
+### Features
+
+* add snakehelpers and remove redundant code ([e038d08](https://github.com/jlanga/mg_preprocess/commit/e038d08d3577ec35fcf8c1a27d6711acf76e6960))
+* add unnamed rule as a surrogate of all ([f1281af](https://github.com/jlanga/mg_preprocess/commit/f1281af54c763e7a20765e105366a0c82c44c06a))
+* append preprocessing__ for easier portability ([1ce6924](https://github.com/jlanga/mg_preprocess/commit/1ce69244e2f602f5a260db57d4faaebb43f7f585))
+
+
+### Bug Fixes
+
+* ask for multiqc folder ([c45294e](https://github.com/jlanga/mg_preprocess/commit/c45294e7ca71fb83124d2ca78f76991212afd557))
+* put config although we don't use it ([3b4211f](https://github.com/jlanga/mg_preprocess/commit/3b4211fbb131f437006885d197afe93ea3bb60a0))
+* put everything in results/preprocess ([98b3b7c](https://github.com/jlanga/mg_preprocess/commit/98b3b7cae9caeb4d5f9a1e297e1627e9299b24d2))
+* remove anonymous rule ([0b4e524](https://github.com/jlanga/mg_preprocess/commit/0b4e524234b35be873d75a01d37b01af5ce0a399))
+
 ## 1.0.0 (2024-10-17)
 
 
