@@ -1,4 +1,4 @@
-rule multiqc__:
+rule preprocess__multiqc:
     input:
         reads=[
             READS / f"{sample_id}.{library_id}_{end}_fastqc.zip"
@@ -53,6 +53,6 @@ rule multiqc__:
         """
 
 
-rule multiqc:
+rule preprocess__multiqc__all:
     input:
-        rules.multiqc__.output,
+        rules.preprocess__multiqc.output,

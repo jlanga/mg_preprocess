@@ -1,7 +1,7 @@
 include: "fastp_functions.smk"
 
 
-rule fastp__:
+rule preprocess__fastp:
     """Run fastp on one PE library
 
     NOTE: don't use process substitution not because fastp cannot handle it,
@@ -28,7 +28,7 @@ rule fastp__:
         "v4.7.1/bio/fastp"
 
 
-rule fastp:
+rule preprocess__fastp__all:
     """Run fastp over all libraries"""
     input:
         [

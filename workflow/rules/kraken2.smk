@@ -1,4 +1,4 @@
-rule kraken2__assign__:
+rule preprocess__kraken2__assign:
     """
     Run kraken2 over all samples at once using the /dev/shm/ trick.
 
@@ -81,7 +81,7 @@ rule kraken2__assign__:
         """
 
 
-rule kraken2:
+rule preprocess__kraken2__all:
     input:
         [
             KRAKEN2 / f"{kraken2_db}" / f"{sample}.{library}.out.gz"

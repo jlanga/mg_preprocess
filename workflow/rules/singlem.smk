@@ -1,4 +1,4 @@
-rule singlem__pipe__:
+rule preprocess__singlem__pipe:
     """Run singlem over one sample
 
     NOTE: SingleM asks in the documentation for the raw reads. Here we are
@@ -30,7 +30,7 @@ rule singlem__pipe__:
         """
 
 
-rule singlem__condense__:
+rule preprocess__singlem__condense:
     """Aggregate all the singlem results into a single table"""
     input:
         archive_otu_tables=[
@@ -56,7 +56,7 @@ rule singlem__condense__:
         """
 
 
-rule singlem__microbial_fraction__:
+rule preprocess__singlem__microbial_fraction:
     """Run singlem microbial_fraction over one sample"""
     input:
         forward_=FASTP / "{sample_id}.{library_id}_1.fq.gz",
@@ -83,7 +83,7 @@ rule singlem__microbial_fraction__:
         """
 
 
-rule singlem__microbial_fraction__aggregate__:
+rule preprocess__singlem__microbial_fraction__aggregate:
     """Aggregate all the microbial_fraction files into one tsv"""
     input:
         tsvs=[
@@ -108,6 +108,6 @@ rule singlem__microbial_fraction__aggregate__:
         """
 
 
-rule singlem:
+rule preprocess__singlem__all:
     input:
-        rules.singlem__microbial_fraction__aggregate__.output,
+        rules.preprocess__singlem__microbial_fraction__aggregate.output,

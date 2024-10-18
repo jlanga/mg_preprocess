@@ -1,4 +1,4 @@
-rule nonpareil__run__:
+rule preprocess__nonpareil__run:
     """Run nonpareil over one sample
 
     NOTE: Nonpareil only ask for one of the pair-end reads
@@ -30,7 +30,7 @@ rule nonpareil__run__:
         """
 
 
-rule nonpareil__curves__:
+rule preprocess__nonpareil__curves:
     """Export nonpareil results to json for multiqc"""
     input:
         NONPAREIL / "{sample_id}.{library_id}.npo",
@@ -52,7 +52,7 @@ rule nonpareil__curves__:
         """
 
 
-rule nonpareil:
+rule preprocess__nonpareil__all:
     """Run nonpareil over all samples and produce JSONs for multiqc"""
     input:
         [

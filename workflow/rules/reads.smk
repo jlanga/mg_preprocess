@@ -1,7 +1,7 @@
 include: "reads_functions.smk"
 
 
-rule reads__:
+rule preprocess__reads:
     """Make a link to the original forward file, with a prettier name than default"""
     input:
         forward_=get_forward,
@@ -20,7 +20,7 @@ rule reads__:
         """
 
 
-rule reads:
+rule preprocess__reads__all:
     """Link all reads in the samples.tsv"""
     input:
         [
@@ -31,4 +31,4 @@ rule reads:
 
 
 localrules:
-    reads__,
+    preprocess__reads,

@@ -1,7 +1,7 @@
 include: "bowtie2_functions.smk"
 
 
-rule bowtie2_build__:
+rule preprocess__bowtie2_build:
     """Build bowtie2 index for a reference
 
     NOTE: Let the script decide to use a small or a large index based on the size of
@@ -36,7 +36,7 @@ rule bowtie2_build__:
         """
 
 
-rule bowtie2__build:
+rule preprocess__bowtie2__build__all:
     """Build bowtie2 index for all host genomes"""
     input:
         [
@@ -46,7 +46,7 @@ rule bowtie2__build:
         ],
 
 
-rule bowtie2__map__:
+rule preprocess__bowtie2__map:
     """Map one library to reference genome using bowtie2
 
     Output SAM file is piped to samtools sort to generate a CRAM file.
@@ -98,7 +98,7 @@ rule bowtie2__map__:
         """
 
 
-rule bowtie2__map:
+rule preprocess__bowtie2__map__all:
     input:
         [
             BOWTIE2 / f"{host}.{sample_id}.{library_id}.bam"
@@ -107,7 +107,7 @@ rule bowtie2__map:
         ],
 
 
-rule bowtie2__unaligned__:
+rule preprocess__bowtie2__fastq:
     """Convert BAM to FASTQ using samtools and using the correct reference
 
     NOTE: bowtie2 does not like CRAM files, and although can use a BAM file as an input,
@@ -156,7 +156,7 @@ rule bowtie2__unaligned__:
         """
 
 
-rule bowtie2__unaligned:
+rule preprocess__bowtie2__fastq__all:
     input:
         [
             BOWTIE2 / f"{host}.{sample_id}.{library_id}_u{end}.fq.gz"
@@ -166,7 +166,7 @@ rule bowtie2__unaligned:
         ],
 
 
-rule bowtie2__clean__:
+rule preprocess__bowtie2__clean:
     input:
         forward_=get_final_fastq_forward,
         reverse_=get_final_fastq_reverse,
@@ -201,7 +201,7 @@ rule bowtie2__clean__:
         """
 
 
-rule bowtie2__clean:
+rule preprocess__bowtie2__clean__all:
     input:
         [
             BOWTIE2 / f"{sample_id}.{library_id}_{end}.fq.gz"
@@ -210,9 +210,9 @@ rule bowtie2__clean:
         ],
 
 
-rule bowtie2:
+rule preprocess__bowtie2__all:
     input:
-        rules.bowtie2__build.input,
-        rules.bowtie2__map.input,
-        rules.bowtie2__unaligned.input,
-        rules.bowtie2__clean.input,
+        rules.preprocess__bowtie2__build__all.input,
+        rules.preprocess__bowtie2__map__all.input,
+        rules.preprocess__bowtie2__fastq__all.input,
+        rules.preprocess__bowtie2__clean__all.input,

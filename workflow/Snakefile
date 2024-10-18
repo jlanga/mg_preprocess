@@ -38,7 +38,12 @@ include: "rules/fastqc.smk"
 include: "rules/multiqc.smk"
 
 
+rule preprocess__all:
+    input:
+        rules.preprocess__singlem__all.input,
+        rules.preprocess__multiqc__all.input,
+
+
 rule all:
     input:
-        rules.singlem.input,
-        rules.multiqc.input,
+        rules.preprocess__all.input,
