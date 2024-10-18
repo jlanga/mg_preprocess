@@ -3,9 +3,9 @@ rule preprocess__hosts:
     input:
         fa_gz=lambda wildcards: features["hosts"][wildcards.host],
     output:
-        fa_gz=HOSTS / "{host}.fa.gz",
+        fa_gz=PRE_HOSTS / "{host}.fa.gz",
     log:
-        HOSTS / "{host}.log",
+        PRE_HOSTS / "{host}.log",
     conda:
         "../environments/hosts.yml"
     cache: "omit-software"
@@ -27,4 +27,4 @@ rule preprocess__hosts:
 rule preprocess__hosts__all:
     """Recompress all host genomes"""
     input:
-        [HOSTS / f"{host}.fa.gz" for host in HOST_NAMES],
+        [PRE_HOSTS / f"{host}.fa.gz" for host in HOST_NAMES],

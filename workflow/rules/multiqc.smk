@@ -1,31 +1,31 @@
 rule preprocess__multiqc:
     input:
         reads=[
-            READS / f"{sample_id}.{library_id}_{end}_fastqc.zip"
+            PRE_READS / f"{sample_id}.{library_id}_{end}_fastqc.zip"
             for sample_id, library_id in SAMPLE_LIBRARY
             for end in [1, 2]
         ],
         fastp=[
-            FASTP / f"{sample_id}.{library_id}_fastp.html"
+            PRE_FASTP / f"{sample_id}.{library_id}_fastp.html"
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
         bowtie2=[
-            BOWTIE2 / f"{host}.{sample_id}.{library_id}.{report}"
+            PRE_BOWTIE2 / f"{host}.{sample_id}.{library_id}.{report}"
             for host in HOST_NAMES
             for report in BAM_REPORTS
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
         clean=[
-            BOWTIE2 / f"{sample_id}.{library_id}_{end}_fastqc.zip"
+            PRE_BOWTIE2 / f"{sample_id}.{library_id}_{end}_fastqc.zip"
             for sample_id, library_id in SAMPLE_LIBRARY
             for end in ["1", "2"]
         ],
         nonpareil=[
-            NONPAREIL / f"{sample_id}.{library_id}.json"
+            PRE_NONPAREIL / f"{sample_id}.{library_id}.json"
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
         kraken2=[
-            KRAKEN2 / kraken2_db / f"{sample_id}.{library_id}.report"
+            PRE_KRAKEN2 / kraken2_db / f"{sample_id}.{library_id}.report"
             for sample_id, library_id in SAMPLE_LIBRARY
             for kraken2_db in KRAKEN2_DBS
         ],
