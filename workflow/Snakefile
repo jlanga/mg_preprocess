@@ -51,8 +51,4 @@ rule preprocess__all:
     input:
         rules.preprocess__singlem__all.input,
         rules.preprocess__multiqc__all.input,
-
-
-rule all:
-    input:
-        rules.preprocess__all.input,
+    default_target: True
