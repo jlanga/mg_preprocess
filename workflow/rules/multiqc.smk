@@ -30,7 +30,8 @@ rule multiqc__:
             for kraken2_db in KRAKEN2_DBS
         ],
     output:
-        RESULTS / "preprocess.html",
+        html=RESULTS / "preprocess.html",
+        folder=directory(RESULTS / "preprocess_data"),
     log:
         RESULTS / "preprocess.log",
     conda:
