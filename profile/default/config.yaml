@@ -1,4 +1,4 @@
-# Default resources fro snakemake
+# Default resources for snakemake
 ---
 __use_yte__: true
 
@@ -8,25 +8,29 @@ default-resources:
 
 
 set-threads:
-  fastp__: 8
-  bowtie2__build__: 24
-  bowtie2__map__: 24
-  bowtie2__unaligned__: 24
-  bowtie2__clean__: 24
+  # preprocess
+  preprocess__fastp: 8
+  preprocess__bowtie2__build: 24
+  preprocess__bowtie2__map: 24
+  preprocess__bowtie2__fastq: 24
+  preprocess__bowtie2__clean: 24
+  preprocess__kraken2__assign: 8
+
 
 set-resources:
-  fastp__:
+  # preprocess
+  preprocess__fastp:
     mem_mb: 8G
     runtime: 30m
-  bowtie2__build__:
+  preprocess__bowtie2__build:
     mem_mb: 32 * 1024 * 2 ** (attempt - 1)
     runtime: 12h
-  bowtie2__map__:
+  preprocess__bowtie2__map:
     mem_mb: 32 * 1024 * 2 ** (attempt - 1)
     runtime: 12h
-  bowtie2__unaligned__:
+  preprocess__bowtie2__fastq:
     mem_mb: 8G
     runtime: 1h
-  nonpareil__:
+  preprocess__nonpareil__run:
     mem_mb: 4G
     runtime: 6h

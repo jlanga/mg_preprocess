@@ -1,4 +1,4 @@
-rule kraken2__assign__:
+rule preprocess__kraken2__assign:
     """
     Run kraken2 over all samples at once using the /dev/shm/ trick.
 
@@ -6,26 +6,28 @@ rule kraken2__assign__:
     """
     input:
         forwards=[
-            FASTP / f"{sample}.{library}_1.fq.gz" for sample, library in SAMPLE_LIBRARY
+            PRE_FASTP / f"{sample}.{library}_1.fq.gz"
+            for sample, library in SAMPLE_LIBRARY
         ],
         rerverses=[
-            FASTP / f"{sample}.{library}_2.fq.gz" for sample, library in SAMPLE_LIBRARY
+            PRE_FASTP / f"{sample}.{library}_2.fq.gz"
+            for sample, library in SAMPLE_LIBRARY
         ],
         database=lambda w: features["databases"]["kraken2"][w.kraken2_db],
     output:
         out_gzs=[
-            KRAKEN2 / "{kraken2_db}" / f"{sample}.{library}.out.gz"
+            PRE_KRAKEN2 / "{kraken2_db}" / f"{sample}.{library}.out.gz"
             for sample, library in SAMPLE_LIBRARY
         ],
         reports=[
-            KRAKEN2 / "{kraken2_db}" / f"{sample}.{library}.report"
+            PRE_KRAKEN2 / "{kraken2_db}" / f"{sample}.{library}.report"
             for sample, library in SAMPLE_LIBRARY
         ],
     log:
-        KRAKEN2 / "{kraken2_db}.log",
+        PRE_KRAKEN2 / "{kraken2_db}.log",
     params:
-        in_folder=FASTP,
-        out_folder=lambda w: KRAKEN2 / w.kraken2_db,
+        in_folder=PRE_FASTP,
+        out_folder=lambda w: PRE_KRAKEN2 / w.kraken2_db,
         kraken_db_name="{kraken2_db}",
     conda:
         "../environments/kraken2.yml"
@@ -81,10 +83,10 @@ rule kraken2__assign__:
         """
 
 
-rule kraken2:
+rule preprocess__kraken2__all:
     input:
         [
-            KRAKEN2 / f"{kraken2_db}" / f"{sample}.{library}.out.gz"
+            PRE_KRAKEN2 / f"{kraken2_db}" / f"{sample}.{library}.out.gz"
             for sample, library in SAMPLE_LIBRARY
             for kraken2_db in KRAKEN2_DBS
         ],

@@ -3,13 +3,12 @@ RESULTS = Path("results")
 
 PRE = RESULTS / "preprocess"
 
-READS = PRE / "reads"
-HOSTS = PRE / "hosts"
+PRE_READS = PRE / "reads"
+PRE_HOSTS = PRE / "hosts"
+PRE_FASTP = PRE / "fastp"
 
-FASTP = PRE / "fastp"
-
-BUILD = PRE / "build"
-BOWTIE2 = PRE / "bowtie2"
-NONPAREIL = PRE / "nonpareil"
-SINGLEM = PRE / "singlem"
-KRAKEN2 = PRE / "kraken2"
+PRE_BUILD = PRE / "build"
+PRE_BOWTIE2 = PRE / "bowtie2"
+PRE_NONPAREIL = PRE / "nonpareil"
+PRE_SINGLEM = PRE / "singlem"
+PRE_KRAKEN2 = PRE / "kraken2"

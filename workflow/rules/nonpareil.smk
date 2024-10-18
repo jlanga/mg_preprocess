@@ -1,4 +1,4 @@
-rule nonpareil__run__:
+rule preprocess__nonpareil__run:
     """Run nonpareil over one sample
 
     NOTE: Nonpareil only ask for one of the pair-end reads
@@ -6,18 +6,18 @@ rule nonpareil__run__:
     NOTE: in case that nonpareil fails for low coverage samples, it creates empty files
     """
     input:
-        forward_=BOWTIE2 / "{sample_id}.{library_id}_1.fq.gz",
+        forward_=PRE_BOWTIE2 / "{sample_id}.{library_id}_1.fq.gz",
     output:
-        npa=touch(NONPAREIL / "{sample_id}.{library_id}.npa"),
-        npc=touch(NONPAREIL / "{sample_id}.{library_id}.npc"),
-        npl=touch(NONPAREIL / "{sample_id}.{library_id}.npl"),
-        npo=touch(NONPAREIL / "{sample_id}.{library_id}.npo"),
+        npa=touch(PRE_NONPAREIL / "{sample_id}.{library_id}.npa"),
+        npc=touch(PRE_NONPAREIL / "{sample_id}.{library_id}.npc"),
+        npl=touch(PRE_NONPAREIL / "{sample_id}.{library_id}.npl"),
+        npo=touch(PRE_NONPAREIL / "{sample_id}.{library_id}.npo"),
     log:
-        NONPAREIL / "{sample_id}.{library_id}.log",
+        PRE_NONPAREIL / "{sample_id}.{library_id}.log",
     conda:
         "../environments/nonpareil.yml"
     params:
-        prefix=lambda w: NONPAREIL / f"{w.sample_id}.{w.library_id}",
+        prefix=lambda w: PRE_NONPAREIL / f"{w.sample_id}.{w.library_id}",
     shell:
         """
         nonpareil \
@@ -30,14 +30,14 @@ rule nonpareil__run__:
         """
 
 
-rule nonpareil__curves__:
+rule preprocess__nonpareil__curves:
     """Export nonpareil results to json for multiqc"""
     input:
-        NONPAREIL / "{sample_id}.{library_id}.npo",
+        PRE_NONPAREIL / "{sample_id}.{library_id}.npo",
     output:
-        NONPAREIL / "{sample_id}.{library_id}.json",
+        PRE_NONPAREIL / "{sample_id}.{library_id}.json",
     log:
-        NONPAREIL / "{sample_id}.{library_id}.json.log",
+        PRE_NONPAREIL / "{sample_id}.{library_id}.json.log",
     conda:
         "../environments/nonpareil.yml"
     params:
@@ -52,10 +52,10 @@ rule nonpareil__curves__:
         """
 
 
-rule nonpareil:
+rule preprocess__nonpareil__all:
     """Run nonpareil over all samples and produce JSONs for multiqc"""
     input:
         [
-            NONPAREIL / f"{sample_id}.{library_id}.json"
+            PRE_NONPAREIL / f"{sample_id}.{library_id}.json"
             for sample_id, library_id in SAMPLE_LIBRARY
         ],

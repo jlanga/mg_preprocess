@@ -1,17 +1,17 @@
 include: "bowtie2_functions.smk"
 
 
-rule bowtie2_build__:
+rule preprocess__bowtie2_build:
     """Build bowtie2 index for a reference
 
     NOTE: Let the script decide to use a small or a large index based on the size of
     the reference genome.
     """
     input:
-        reference=HOSTS / "{host}.fa.gz",
+        reference=PRE_HOSTS / "{host}.fa.gz",
     output:
         multiext(
-            str(BOWTIE2 / "build" / "{host}"),
+            str(PRE_BUILD / "{host}"),
             ".1.bt2",
             ".2.bt2",
             ".3.bt2",
@@ -20,11 +20,11 @@ rule bowtie2_build__:
             ".rev.2.bt2",
         ),
     log:
-        BOWTIE2 / "build" / "{host}.log",
+        PRE_BUILD / "{host}.log",
     conda:
         "../environments/bowtie2.yml"
     params:
-        prefix=lambda w: str(BOWTIE2 / "build" / f"{w.host}"),
+        prefix=lambda w: str(PRE_BUILD / f"{w.host}"),
     cache: "omit-software"
     shell:
         """
@@ -36,26 +36,33 @@ rule bowtie2_build__:
         """
 
 
-rule bowtie2__build:
+rule preprocess__bowtie2__build__all:
     """Build bowtie2 index for all host genomes"""
     input:
         [
-            BOWTIE2 / "build" / f"{host}.{end}"
-            for end in ["1.bt2", "2.bt2", "3.bt2", "4.bt2", "rev.1.bt2", "rev.2.bt2"]
+            PRE_BUILD / f"{host}.{extension}"
+            for extension in [
+                "1.bt2",
+                "2.bt2",
+                "3.bt2",
+                "4.bt2",
+                "rev.1.bt2",
+                "rev.2.bt2",
+            ]
             for host in HOST_NAMES
         ],
 
 
-rule bowtie2__map__:
+rule preprocess__bowtie2__map:
     """Map one library to reference genome using bowtie2
 
     Output SAM file is piped to samtools sort to generate a CRAM file.
     """
     input:
-        forward_=get_forward_fastq,
-        reverse_=get_reverse_fastq,
+        forward_=get_fastq_for_host_mapping_forward,
+        reverse_=get_fastq_for_host_mapping_reverse,
         mock=multiext(
-            str(BOWTIE2 / "build" / "{host}"),
+            str(PRE_BUILD / "{host}"),
             ".1.bt2",
             ".2.bt2",
             ".3.bt2",
@@ -63,17 +70,14 @@ rule bowtie2__map__:
             ".rev.1.bt2",
             ".rev.2.bt2",
         ),
-        reference=HOSTS / "{host}.fa.gz",
-        fai=HOSTS / "{host}.fa.gz.fai",
-        gzi=HOSTS / "{host}.fa.gz.gzi",
     output:
-        bam=BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
+        bam=PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
     log:
-        BOWTIE2 / "{host}.{sample_id}.{library_id}.log",
+        PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}.log",
     params:
-        index=lambda w: BOWTIE2 / "build" / f"{w.host}",
-        samtools_extra=params["bowtie2"]["samtools_extra"],
-        bowtie2_extra=params["bowtie2"]["bowtie2_extra"],
+        index=lambda w: PRE_BUILD / f"{w.host}",
+        samtools_extra=params["preprocess"]["bowtie2"]["samtools_extra"],
+        bowtie2_extra=params["preprocess"]["bowtie2"]["bowtie2_extra"],
         rg_id=compose_rg_id,
         rg_extra=compose_rg_extra,
     conda:
@@ -90,7 +94,6 @@ rule bowtie2__map__:
             --threads {threads} \
         | samtools sort \
             {params.samtools_extra} \
-            --reference {input.reference} \
             --threads {threads} \
             -T {output.bam} \
             -o {output.bam} \
@@ -98,29 +101,29 @@ rule bowtie2__map__:
         """
 
 
-rule bowtie2__map:
+rule preprocess__bowtie2__map__all:
     input:
         [
-            BOWTIE2 / f"{host}.{sample_id}.{library_id}.bam"
+            PRE_BOWTIE2 / f"{host}.{sample_id}.{library_id}.bam"
             for host in HOST_NAMES
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
 
 
-rule bowtie2__unaligned__:
+rule preprocess__bowtie2__fastq:
     """Convert BAM to FASTQ using samtools and using the correct reference
 
     NOTE: bowtie2 does not like CRAM files, and although can use a BAM file as an input,
     bowtie2 fails to receive a piped SAM input. Therefore, we need to convert the CRAM file to a physical FASTQ file.
     """
     input:
-        bam=BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
-        bai=BOWTIE2 / "{host}.{sample_id}.{library_id}.bam.bai",
+        bam=PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}.bam",
+        bai=PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}.bam.bai",
     output:
-        forward_=temp(BOWTIE2 / "{host}.{sample_id}.{library_id}_u1.fq.gz"),
-        reverse_=temp(BOWTIE2 / "{host}.{sample_id}.{library_id}_u2.fq.gz"),
+        forward_=temp(PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}_u1.fq.gz"),
+        reverse_=temp(PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}_u2.fq.gz"),
     log:
-        BOWTIE2 / "{host}.{sample_id}.{library_id}.unaligned.log",
+        PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}.unaligned.log",
     conda:
         "../environments/bowtie2.yml"
     shell:
@@ -156,25 +159,25 @@ rule bowtie2__unaligned__:
         """
 
 
-rule bowtie2__unaligned:
+rule preprocess__bowtie2__fastq__all:
     input:
         [
-            BOWTIE2 / f"{host}.{sample_id}.{library_id}_u{end}.fq.gz"
+            PRE_BOWTIE2 / f"{host}.{sample_id}.{library_id}_u{end}.fq.gz"
             for host in HOST_NAMES
             for sample_id, library_id in SAMPLE_LIBRARY
             for end in [1, 2]
         ],
 
 
-rule bowtie2__clean__:
+rule preprocess__bowtie2__clean:
     input:
         forward_=get_final_fastq_forward,
         reverse_=get_final_fastq_reverse,
     output:
-        forward_=BOWTIE2 / "{sample_id}.{library_id}_1.fq.gz",
-        reverse_=BOWTIE2 / "{sample_id}.{library_id}_2.fq.gz",
+        forward_=PRE_BOWTIE2 / "{sample_id}.{library_id}_1.fq.gz",
+        reverse_=PRE_BOWTIE2 / "{sample_id}.{library_id}_2.fq.gz",
     log:
-        BOWTIE2 / "{sample_id}.{library_id}.log",
+        PRE_BOWTIE2 / "{sample_id}.{library_id}.log",
     conda:
         "../environments/bowtie2.yml"
     shell:
@@ -201,18 +204,18 @@ rule bowtie2__clean__:
         """
 
 
-rule bowtie2__clean:
+rule preprocess__bowtie2__clean__all:
     input:
         [
-            BOWTIE2 / f"{sample_id}.{library_id}_{end}.fq.gz"
+            PRE_BOWTIE2 / f"{sample_id}.{library_id}_{end}.fq.gz"
             for sample_id, library_id in SAMPLE_LIBRARY
             for end in [1, 2]
         ],
 
 
-rule bowtie2:
+rule preprocess__bowtie2__all:
     input:
-        rules.bowtie2__build.input,
-        rules.bowtie2__map.input,
-        rules.bowtie2__unaligned.input,
-        rules.bowtie2__clean.input,
+        rules.preprocess__bowtie2__build__all.input,
+        rules.preprocess__bowtie2__map__all.input,
+        rules.preprocess__bowtie2__fastq__all.input,
+        rules.preprocess__bowtie2__clean__all.input,

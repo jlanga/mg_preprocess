@@ -57,7 +57,7 @@ jobs:
             --cores 3
             --conda-cleanup-pkgs cache
             --latency-wait 10
-            multiqc
+            preprocess__multiqc__all
 
       - uses: actions/upload-artifact@v4
         if: failure()
