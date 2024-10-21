@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/jlanga/mg_preprocess/compare/v1.1.0...v1.1.1) (2024-10-21)
+
+
+### Bug Fixes
+
+* remove the all rule to avoid collisions and make preprocess__all the default one ([a6bed9e](https://github.com/jlanga/mg_preprocess/commit/a6bed9eee6ccd918bfdd6215bb1cae9e7c3d7ced))
+* typo in rule name ([4e1590f](https://github.com/jlanga/mg_preprocess/commit/4e1590fc1263df35a755ac96bd8049367b68faf7))
+
 ## [1.1.0](https://github.com/jlanga/mg_preprocess/compare/v1.0.0...v1.1.0) (2024-10-18)
 
 
