@@ -1,7 +1,7 @@
 include: "bowtie2_functions.smk"
 
 
-rule preprocess__bowtie2_build:
+rule preprocess__bowtie2__build:
     """Build bowtie2 index for a reference
 
     NOTE: Let the script decide to use a small or a large index based on the size of
