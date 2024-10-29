@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/jlanga/mg_preprocess/compare/v1.1.1...v1.2.0) (2024-10-29)
+
+
+### Features
+
+* update singlem ([7eaa6d9](https://github.com/jlanga/mg_preprocess/commit/7eaa6d9c933f27f3aa3cdb7b921defb747d46ca0))
+
+
+### Bug Fixes
+
+* add the fastp json, not the html ([3963847](https://github.com/jlanga/mg_preprocess/commit/396384770f2103130a17313e95968c911593e61b))
+
 ## [1.1.1](https://github.com/jlanga/mg_preprocess/compare/v1.1.0...v1.1.1) (2024-10-21)
 
 
