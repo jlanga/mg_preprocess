@@ -6,7 +6,7 @@ rule preprocess__multiqc:
             for end in [1, 2]
         ],
         fastp=[
-            PRE_FASTP / f"{sample_id}.{library_id}_fastp.html"
+            PRE_FASTP / f"{sample_id}.{library_id}_fastp.json"
             for sample_id, library_id in SAMPLE_LIBRARY
         ],
         bowtie2=[
