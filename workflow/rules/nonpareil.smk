@@ -44,6 +44,12 @@ rule preprocess__nonpareil__curves:
         labels=lambda w: f"{w.sample_id}.{w.library_id}",
     shell:
         """
+        if [ ! -s {input} ] ; then
+            echo "Empty nonpareil output for {input}." > {log}
+            touch {output}
+            exit
+        fi
+
         Rscript --no-init-file $(which NonpareilCurves.R) \
             --labels {params.labels} \
             --json {output} \
