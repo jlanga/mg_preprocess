@@ -26,6 +26,8 @@ rule preprocess__bowtie2__build:
     params:
         prefix=lambda w: str(PRE_BUILD / f"{w.host}"),
     cache: "omit-software"
+    group:
+        "preprocess__{host}"
     shell:
         """
         bowtie2-build \
@@ -82,6 +84,8 @@ rule preprocess__bowtie2__map:
         rg_extra=helpers.compose_rg_extra,
     conda:
         "../environments/bowtie2.yml"
+    group:
+        "preprocess__{sample_id}.{library_id}"
     shell:
         """
         ( bowtie2 \
@@ -126,6 +130,8 @@ rule preprocess__bowtie2__fastq:
         PRE_BOWTIE2 / "{host}.{sample_id}.{library_id}.unaligned.log",
     conda:
         "../environments/bowtie2.yml"
+    group:
+        "preprocess__{sample_id}.{library_id}"
     shell:
         """
         rm \
@@ -180,6 +186,8 @@ rule preprocess__bowtie2__clean:
         PRE_BOWTIE2 / "{sample_id}.{library_id}.log",
     conda:
         "../environments/bowtie2.yml"
+    group:
+        "preprocess__{sample_id}.{library_id}"
     shell:
         """
         ( gzip \
