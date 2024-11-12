@@ -37,7 +37,6 @@ use rule * from helpers as helpers__*
 
 # Import subworkflows
 include: "rules/folders.smk"
-include: "rules/samples_tsv_functions.smk"
 include: "rules/reads.smk"
 include: "rules/hosts.smk"
 include: "rules/fastp.smk"

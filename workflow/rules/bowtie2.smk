@@ -80,8 +80,8 @@ rule preprocess__bowtie2__map:
         index=lambda w: PRE_BUILD / f"{w.host}",
         samtools_extra=params["preprocess"]["bowtie2"]["samtools_extra"],
         bowtie2_extra=params["preprocess"]["bowtie2"]["bowtie2_extra"],
-        rg_id=helpers.compose_rg_id,
-        rg_extra=helpers.compose_rg_extra,
+        rg_id=compose_rg_id,
+        rg_extra=compose_rg_extra,
     conda:
         "../environments/bowtie2.yml"
     group:
