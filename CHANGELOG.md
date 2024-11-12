@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.0](https://github.com/jlanga/mg_preprocess/compare/v1.2.0...v1.3.0) (2024-11-12)
+
+
+### Features
+
+* bracken ([3265c15](https://github.com/jlanga/mg_preprocess/commit/3265c15ebe5f6ce71d26dc606bb0166bc561bbca))
+* group preprocessing of hosts and samples ([6146cb7](https://github.com/jlanga/mg_preprocess/commit/6146cb71990246ab4e030f343837bc6f1ca11263))
+* make nonpareil handle empty or near-empty files ([27ccc7d](https://github.com/jlanga/mg_preprocess/commit/27ccc7d9645238fd90632941c9894a69b021affc))
+* remove unused samtools files ([889e363](https://github.com/jlanga/mg_preprocess/commit/889e3636c0810c8f8448ea69bbd2c03d5ef0d110))
+* **singlem:** handle empty files ([d8f38f5](https://github.com/jlanga/mg_preprocess/commit/d8f38f5e90b9c77f438d6e9a9517f2dad48ce9c6))
+
+
+### Bug Fixes
+
+* add resources for kraken2 ([5f88e9e](https://github.com/jlanga/mg_preprocess/commit/5f88e9e5bb4bdf1a148a4dd3963d411d2368bb6b))
+* correct test file names ([fb98517](https://github.com/jlanga/mg_preprocess/commit/fb985179937f951250352e52876f2865d8f63b44))
+* use local functions, not the ones from snakehelpers ([f4efecb](https://github.com/jlanga/mg_preprocess/commit/f4efecb5055f6ef3c5625777499ba81070ac5405))
+
 ## [1.2.0](https://github.com/jlanga/mg_preprocess/compare/v1.1.1...v1.2.0) (2024-10-29)
 
 
