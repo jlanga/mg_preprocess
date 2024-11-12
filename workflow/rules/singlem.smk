@@ -3,6 +3,8 @@ rule preprocess__singlem__pipe:
 
     NOTE: SingleM asks in the documentation for the raw reads. Here we are
     passing it the non-host and trimmed ones.
+    NOTE 2: reads come from FASTP. If fastp trims everything, it returns 0 size uncompressed file,
+    not a 20 bytes compressed file. This is why we check for the size of the file, rather than the gzipped content.
     """
     input:
         forward_=PRE_FASTP / "{sample_id}.{library_id}_1.fq.gz",
@@ -18,6 +20,12 @@ rule preprocess__singlem__pipe:
         "../environments/singlem.yml"
     shell:
         """
+        if [ ! -s {input.forward_} ]; then
+            echo "Empty file: {input.forward_}" > {log} 2>&1
+            touch {output}
+            exit 0
+        fi
+
         singlem pipe \
             --forward {input.forward_} \
             --reverse {input.reverse_} \
@@ -57,7 +65,11 @@ rule preprocess__singlem__condense:
 
 
 rule preprocess__singlem__microbial_fraction:
-    """Run singlem microbial_fraction over one sample"""
+    """Run singlem microbial_fraction over one sample
+
+    NOTE: reads come from FASTP. If fastp trims everything, it returns 0 size uncompressed file,
+    not a 20 bytes compressed file. This is why we check for the size of the file, rather than the gzipped content.
+   """
     input:
         forward_=PRE_FASTP / "{sample_id}.{library_id}_1.fq.gz",
         reverse_=PRE_FASTP / "{sample_id}.{library_id}_2.fq.gz",
@@ -73,6 +85,12 @@ rule preprocess__singlem__microbial_fraction:
         "../environments/singlem.yml"
     shell:
         """
+        if [ ! -s {input.forward_} ]; then
+            echo "Empty file: {input.forward_}" > {log} 2>&1
+            touch {output}
+            exit 0
+        fi
+
         singlem microbial_fraction \
             --forward {input.forward_} \
             --reverse {input.reverse_} \
@@ -96,11 +114,13 @@ rule preprocess__singlem__microbial_fraction__aggregate:
         PRE_SINGLEM / "microbial_fraction.log",
     conda:
         "../environments/singlem.yml"
+    params:
+        working_dir=PRE_SINGLEM / "microbial_fraction",
     shell:
         """
         ( csvstack \
             --tabs \
-            {input.tsvs} \
+            $(find {params.working_dir} -maxdepth 1 -size +0 -name "*.tsv") \
         | csvformat \
             --out-tabs \
         > {output.tsv} \

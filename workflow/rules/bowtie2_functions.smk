@@ -1,3 +1,14 @@
+# generic functions to infer sample and library ids
+def compose_rg_id(wildcards):
+    """Compose the read group ID for bowtie2"""
+    return f"{wildcards.sample_id}_{wildcards.library_id}"
+
+
+def compose_rg_extra(wildcards):
+    """Compose the read group extra information for bowtie2"""
+    return f"LB:truseq_{wildcards.library_id}\\tPL:Illumina\\tSM:{wildcards.sample_id}"
+
+
 # functions to choose between fastp or already mapped files
 def get_fastq_for_host_mapping(wildcards):
     """Get the input cram file for host mapping"""

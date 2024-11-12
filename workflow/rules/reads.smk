@@ -1,3 +1,6 @@
+include: "reads_functions.smk"
+
+
 rule preprocess__reads:
     """Make a link to the original forward file, with a prettier name than default"""
     input:

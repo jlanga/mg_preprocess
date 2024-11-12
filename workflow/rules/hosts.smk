@@ -9,6 +9,8 @@ rule preprocess__hosts:
     conda:
         "../environments/hosts.yml"
     cache: "omit-software"
+    group:
+        "preprocess__{host}"
     shell:
         """
         ( gzip \

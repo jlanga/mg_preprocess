@@ -34,3 +34,6 @@ set-resources:
   preprocess__nonpareil__run:
     mem_mb: 4G
     runtime: 6h
+  preprocess__kraken2__assign:
+    mem_mb: 800G
+    runtime: 1h
