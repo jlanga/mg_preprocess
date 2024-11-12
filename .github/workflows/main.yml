@@ -43,9 +43,6 @@ jobs:
             ~/.cache/pre-commit/
           key: snakemake-conda-${{ env.CACHE_NUMBER }}
 
-      - name: Clean conda cache
-        run: conda clean --all --yes
-
       - name: Test workflow
         uses: snakemake/snakemake-github-action@v1.25.1
         with:
@@ -58,6 +55,12 @@ jobs:
             --conda-cleanup-pkgs cache
             --latency-wait 10
             preprocess__multiqc__all
+
+      - name: Clean conda cache
+        run: conda clean --all --yes
+
+      - name: Give permissions to cache
+        run: sudo chmod ugo+rwx -R ~/.snakemake/conda
 
       - uses: actions/upload-artifact@v4
         if: failure()
