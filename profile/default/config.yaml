@@ -35,5 +35,5 @@ set-resources:
     mem_mb: 4G
     runtime: 6h
   preprocess__kraken2__assign:
-    mem_mb: 8G
+    mem_mb: 800G
     runtime: 1h
