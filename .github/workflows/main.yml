@@ -59,8 +59,8 @@ jobs:
       - name: Clean conda cache
         run: conda clean --all --yes
 
-      - name: Give permissions to cache
-        run: sudo chmod ugo+rwx -R ~/.snakemake/conda
+      - name: Cache - unlock permissions
+        run: sudo chmod -R 777 .snakemake/conda
 
       - uses: actions/upload-artifact@v4
         if: failure()
